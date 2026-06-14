@@ -9,6 +9,175 @@
     --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* ============================================= */
+        /* ESTILOS DEL BOTÓN SUBIR Y WHATSAPP FLOTANTE   */
+        /* ============================================= */
+
+        /* Botón Subir */
+        .btn-scroll-top {
+            position: fixed;
+            bottom: 100px; /* Posicionado arriba del botón de WhatsApp */
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            background-color: #ff4500;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none; /* Se activa con Javascript */
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(255, 69, 0, 0.4);
+            z-index: 999;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .btn-scroll-top:hover {
+            background-color: #ffcc00;
+            color: #000;
+            transform: translateY(-3px);
+        }
+
+        /* Contenedor WhatsApp */
+        .whatsapp-floating-container {
+            position: fixed;
+            bottom: 25px;
+            right: 20px;
+            z-index: 1000;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Botón WhatsApp */
+        .btn-whatsapp-toggle {
+            width: 60px;
+            height: 60px;
+            background-color: #25d366;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        .btn-whatsapp-toggle:hover {
+            transform: scale(1.08);
+        }
+
+        /* Notificación roja simulada */
+        .notification-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background-color: #ff4500;
+            color: white;
+            border-radius: 50%;
+            padding: 3px 7px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            border: 2px solid #0f0a0a;
+        }
+
+        /* Ventana Emergente FAQ */
+        .whatsapp-faq-window {
+            position: absolute;
+            bottom: 75px;
+            right: 0;
+            width: 320px;
+            background: #1a1111;
+            border: 1px solid rgba(255, 69, 0, 0.2);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+            display: none; /* Controlado por JS */
+            transform-origin: bottom right;
+            animation: fadeInFaq 0.3s ease forwards;
+        }
+
+        @keyframes fadeInFaq {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Cabecera FAQ */
+        .faq-header {
+            background: linear-gradient(135deg, #128c7e, #25d366);
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            position: relative;
+        }
+        .faq-avatar {
+            width: 38px;
+            height: 38px;
+            background: #0f0a0a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        .faq-header-info h4 { margin: 0; font-size: 0.95rem; font-weight: 600; }
+        .faq-header-info p { margin: 2px 0 0 0; font-size: 0.75rem; opacity: 0.9; }
+        .faq-close {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.4rem;
+            cursor: pointer;
+            opacity: 0.7;
+        }
+        .faq-close:hover { opacity: 1; }
+
+        /* Cuerpo FAQ */
+        .faq-body { padding: 15px; }
+        .faq-welcome {
+            color: #ccc;
+            font-size: 0.82rem;
+            margin-top: 0;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        /* Items de Preguntas */
+        .faq-options { display: flex; flex-direction: column; gap: 8px; }
+        .faq-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #261919;
+            color: #fff;
+            padding: 10px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.82rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.2s ease;
+        }
+        .faq-item:hover {
+            background: #ff4500;
+            color: #000;
+            font-weight: 500;
+            transform: translateX(3px);
+        }
+        .faq-item i { color: #ffcc00; font-size: 0.9rem; }
+        .faq-item:hover i { color: #000; }
+
+        /* Ajuste responsivo para pantallas muy pequeñas */
+        @media (max-width: 360px) {
+            .whatsapp-faq-window { width: 280px; }
+        }
+
 .logo img.nav-logo {
     height: 50px; /* Puedes ajustar la altura para que quede a tu gusto */
     width: auto;
@@ -84,12 +253,6 @@ header {
     .nav-links li {
         margin: 20px 0;
     }
-}
-
-.el-contenedor-de-tu-soporte {
-    display: none; /* Debe estar oculto al cargar la página */
-    position: fixed;
-    /* tus otros estilos */
 }
 
 .nav-container {
