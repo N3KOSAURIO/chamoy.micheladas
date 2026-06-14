@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar Pedido | Chamoy</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Estilos Premium adaptados a la estética Chamoy */
+        body {
+            background-color: #0f0a0a;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+        }
+        .checkout-container {
+            max-width: 600px;
+            margin: 120px auto 40px auto;
+            padding: 30px;
+            background: rgba(25, 18, 18, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px 0 rgba(255, 69, 0, 0.15);
+            border: 1px solid rgba(255, 69, 0, 0.2);
+        }
+        h1, h2 {
+            color: #ff4500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .summary-box {
+            background: #1a1111;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border-left: 4px solid #ffcc00;
+        }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+            padding-bottom: 5px;
+        }
+        .total-box {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #ffcc00;
+            margin-top: 15px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ffcc00;
+            font-weight: 500;
+        }
+        select, input {
+            width: 100%;
+            padding: 12px;
+            background: #261919;
+            border: 1px solid rgba(255, 69, 0, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+        select:focus, input:focus {
+            outline: none;
+            border-color: #ff4500;
+            box-shadow: 0 0 8px rgba(255, 69, 0, 0.5);
+        }
+        .btn-confirmar {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ff4500, #ffcc00);
+            border: none;
+            border-radius: 8px;
+            color: black;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
+        }
+        .btn-confirmar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 69, 0, 0.4);
+        }
+        #campo-direccion {
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="checkout-container">
+        <h1><i class="fa-solid fa-receipt"></i> Finalizar Pedido</h1>
+        
+        <div class="summary-box">
+            <h2>Tu Resumen</h2>
+            <div id="lista-resumen"></div>
+            <div class="total-box">
+                <span>Total a pagar:</span>
+                <span id="total-pago">$0</span>
+            </div>
+        </div>
+
+        <form id="form-pedido">
+            <div class="form-group">
+                <label for="metodo-entrega"><i class="fa-solid fa-motorcycle"></i> ¿Cómo deseas recibir tu pedido?</label>
+                <select id="metodo-entrega" onchange="evaluarEntrega()">
+                    <option value="Domicilio">A Domicilio</option>
+                    <option value="Retiro">Paso por él al Local</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="campo-direccion">
+                <label for="direccion"><i class="fa-solid fa-location-dot"></i> Dirección de Entrega</label>
+                <input type="text" id="direccion" placeholder="Ej: Calle 10 #43-20, Poblado (Apto / Casa)">
+            </div>
+
+            <div class="form-group">
+                <label for="metodo-pago"><i class="fa-solid fa-credit-card"></i> Método de Pago</label>
+                <select id="metodo-pago">
+                    <option value="Efectivo">Efectivo</option>
+                    <option value="Contra entrega">Contra entrega (Datáfono/Físico)</option>
+                    <option value="Transferencia">Transferencia Bancaria (Bancolombia/Nequi)</option>
+                </select>
+            </div>
+
+            <button type="button" class="btn-confirmar" onclick="enviarPedidoWhatsApp()">
+                Confirmar y enviar por WhatsApp <i class="fa-brands fa-whatsapp"></i>
+            </button>
+        </form>
+    </div>
+
+    <script>
+        // Cargar los productos desde el localStorage guardado por index.html
+        let carrito = JSON.parse(localStorage.getItem('CHAMOY_CART')) || [];
+        
+        function renderResumen() {
+            const contenedor = document.getElementById('lista-resumen');
+            let total = 0;
+            contenedor.innerHTML = '';
+
+            if(carrito.length === 0) {
+                contenedor.innerHTML = '<p style="text-align:center;">El carrito está vacío</p>';
+                return;
+            }
+
+            carrito.forEach(producto => {
+                const subtotal = producto.price * producto.quantity;
+                total += subtotal;
+                contenedor.innerHTML += `
+                    <div class="summary-item">
+                        <span>${producto.quantity}x ${producto.name}</span>
+                        <span>$${subtotal.toLocaleString('es-CO')}</span>
+                    </div>
+                `;
+            });
+
+            document.getElementById('total-pago').innerText = `$${total.toLocaleString('es-CO')}`;
+        }
+
+        function evaluarEntrega() {
+            const metodo = document.getElementById('metodo-entrega').value;
+            const campoDireccion = document.getElementById('campo-direccion');
+            if (metodo === 'Retiro') {
+                campoDireccion.style.display = 'none';
+            } else {
+                campoDireccion.style.display = 'block';
+            }
+        }
+
+        function enviarPedidoWhatsApp() {
+            if (carrito.length === 0) {
+                alert("No hay productos en tu pedido.");
+                return;
+            }
+
+            const metodoEntrega = document.getElementById('metodo-entrega').value;
+            const direccion = document.getElementById('direccion').value.trim();
+            const metodoPago = document.getElementById('metodo-pago').value;
+            
+            if (metodoEntrega === 'Domicilio' && direccion === '') {
+                alert("Por favor, ingresa tu dirección para el domicilio.");
+                return;
+            }
+
+            // Construcción del mensaje de WhatsApp estructurado de forma limpia
+            let mensaje = `¡Hola Chamoy! 🌶️🔥\n`;
+            mensaje += `Me gustaría realizar el siguiente pedido:\n\n`;
+            mensaje += `=========================\n`;
+            
+            let total = 0;
+            carrito.forEach(prod => {
+                const subtotal = prod.price * prod.quantity;
+                total += subtotal;
+                mensaje += `• ${prod.quantity}x ${prod.name} ($${subtotal.toLocaleString('es-CO')})\n`;
+            });
+            
+            mensaje += `=========================\n`;
+            mensaje += `💰 *Total:* $${total.toLocaleString('es-CO')}\n\n`;
+            mensaje += `🛵 *Entrega:* ${metodoEntrega}\n`;
+            
+            if (metodoEntrega === 'Domicilio') {
+                mensaje += `📍 *Dirección:* ${direccion}\n`;
+            }
+            
+            mensaje += `💳 *Método de Pago:* ${metodoPago}\n`;
+            
+            // Reemplaza este número por el de tu negocio (código de país incluido sin el +)
+            const numeroTelefono = "573206650984"; 
+            const urlOptimizada = `https://api.whatsapp.com/send?phone=${numeroTelefono}&text=${encodeURIComponent(mensaje)}`;
+            
+            // Vaciar carrito después de enviar
+            localStorage.removeItem('CHAMOY_CART');
+            
+            // Redireccionar a WhatsApp
+            window.location.href = urlOptimizada;
+        }
+
+        // Ejecutar al cargar la página
+        renderResumen();
+    </script>
+</body>
+</html>

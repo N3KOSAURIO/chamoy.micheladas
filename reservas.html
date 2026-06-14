@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservaciones | Chamoy</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo"><img src="imagenes/logo chamoy-04.png" alt="Chamoy Logo" class="nav-logo"></a>
+            
+            <div class="menu-toggle" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+            
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="menu.html">Menú</a></li>
+                    <li><a href="reservas.html" class="active">Reservaciones</a></li>
+                </ul>
+            </nav>
+            <div class="cart-icon-container" onclick="toggleCartMenu()">
+                <i class="fa-solid fa-basket-shopping"></i>
+                <span id="cart-count" class="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="reservation-container">
+        <div class="form-box">
+            <h2>Reserva tu Mesa 🚀</h2>
+            <p>Asegura tu parche de martes a domingo. ¡Te responderemos de inmediato!</p>
+            
+            <form id="booking-form" onsubmit="sendReservation(event)">
+                <div class="input-group">
+                    <label for="username">Nombre completo</label>
+                    <input type="text" id="username" required placeholder="Ej. Juan Pérez">
+                </div>
+                
+                <div class="input-group">
+                    <label for="guests">Número de personas</label>
+                    <input type="number" id="guests" min="1" max="20" required placeholder="¿Cuántos van?">
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="res-date">Fecha</label>
+                        <input type="date" id="res-date" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="res-time">Hora</label>
+                        <input type="time" id="res-time" min="16:00" max="23:00" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Confirmar por WhatsApp</button>
+            </form>
+        </div>
+    </main>
+
+    <div id="side-cart" class="side-cart">
+        <div class="cart-header">
+            <h2>Tu Pedido</h2>
+            <button class="close-cart" onclick="toggleCartMenu()">&times;</button>
+        </div>
+        <div id="cart-items" class="cart-items"></div>
+        <div class="cart-footer">
+            <div class="cart-total">Total: $<span id="cart-total-val">0</span></div>
+            <button class="btn btn-primary btn-block" onclick="sendOrderWhatsApp()">Pedir por WhatsApp <i class="fa-brands fa-whatsapp"></i></button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2026 Chamoy Micheladas & Shots. Todos los derechos reservados.</p>
+            <div class="social-links">
+                <a href="https://www.instagram.com/chamoy_micheladas_shots/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.instagram.com/chamoy_micheladas_shots/" target="_blank"><i class="fa-brands fa-threads"></i></a>
+                <a href="#" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="cart.js"></script>
+</body>
+</html>

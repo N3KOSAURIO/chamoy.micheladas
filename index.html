@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="imagenes/logo chamoy-04.png">
+    <title>Inicio | Chamoy</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* =========================================
+           ESTILOS ESPECÍFICOS DE LA PÁGINA DE INICIO
+           (Puedes moverlos a tu styles.css luego)
+           ========================================= */
+        
+        /* BANNER PRINCIPAL (HERO) */
+        .hero {
+            height: 100vh;
+            /* Aquí puedes usar la imagen de fondo que creamos antes */
+            background: linear-gradient(rgba(15, 10, 10, 0.7), rgba(15, 10, 10, 0.95)), url('fondo.jpg') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+            margin-top: -80px; /* Para subir detrás del navbar transparente */
+        }
+        .hero-content h1 {
+            font-size: 4.5rem;
+            color: #ff4500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(255, 69, 0, 0.5);
+        }
+        .hero-content p {
+            font-size: 1.3rem;
+            color: #e0e0e0;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+        }
+        .btn-hero {
+            background: linear-gradient(135deg, #ff4500, #ffcc00);
+            color: black;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 30px;
+            text-transform: uppercase;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: inline-block;
+        }
+        .btn-hero:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 69, 0, 0.4);
+        }
+
+        /* SECCIÓN: POR QUÉ PREFERIRNOS */
+        .features {
+            padding: 100px 20px;
+            background-color: #0f0a0a;
+            text-align: center;
+        }
+        .features h2 {
+            color: #ffcc00;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .feature-card {
+            background: #1a1111;
+            padding: 40px 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 69, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: #ff4500;
+            box-shadow: 0 10px 25px rgba(255, 69, 0, 0.15);
+        }
+        .feature-card i {
+            font-size: 3.5rem;
+            color: #ff4500;
+            margin-bottom: 20px;
+        }
+        .feature-card h3 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        .feature-card p {
+            color: #b3b3b3;
+            line-height: 1.6;
+        }
+
+        /* SECCIÓN: GOOGLE REVIEWS */
+        .reviews {
+            padding: 80px 20px 100px 20px;
+            background: #140d0d;
+            text-align: center;
+        }
+        .reviews h2 {
+            color: white;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .maps-rating {
+            color: #ffcc00;
+            font-size: 1.8rem;
+            margin-bottom: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .maps-rating span {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: normal;
+        }
+        .maps-rating .google-icon {
+            color: #4285F4; /* Azul Google */
+        }
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .review-card {
+            background: #0f0a0a;
+            padding: 30px;
+            border-radius: 10px;
+            border-left: 4px solid #ff4500;
+            text-align: left;
+            position: relative;
+        }
+        .review-card::before {
+            content: '\f10d'; /* Icono de comillas de FontAwesome */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.05);
+        }
+        .reviewer-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .reviewer-avatar {
+            width: 50px;
+            height: 50px;
+            background: #261919;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffcc00;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .reviewer-name {
+            font-weight: bold;
+            color: white;
+            font-size: 1.1rem;
+        }
+        .review-stars {
+            color: #ffcc00;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        .review-text {
+            color: #cccccc;
+            font-style: italic;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo"><img src="imagenes/logo chamoy-04.png" alt="Chamoy Logo" style="height: 50px;"></a>
+            
+            <div class="menu-toggle" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active">Inicio</a></li>
+                    <li><a href="menu.html">Menú</a></li>
+                    <li><a href="reservas.html">Reservaciones</a></li>
+                </ul>
+            </nav>
+            <div class="cart-icon-container" onclick="window.location.href='menu.html'">
+                <i class="fa-solid fa-utensils"></i>
+                <span style="font-size: 0.8rem; margin-left: 5px;">Pedir</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>El Verdadero Sabor</h1>
+            <p>Comida mexicana, fusión urbana y las micheladas envenenadas más épicas de la ciudad. Una experiencia que despertará todos tus sentidos.</p>
+            <a href="menu.html" class="btn-hero"><i class="fa-solid fa-fire"></i> Ver Menú y Pedir</a> <br> 
+            <br>
+
+            <a href="reservas.html" class="btn-hero"><i class="fa-solid fa-calendar-check"></i> Reservar Ahora</a>
+        </div>
+    </section>
+
+    <section class="features">
+        <h2>¿Por qué preferirnos?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fa-solid fa-burger"></i>
+                <h3>Sabor Único y Fusión</h3>
+                <p>Nuestras recetas como la Burguer Chamoy o los Dorilocos combinan el alma de México con el toque irresistible del sabor local.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fa-solid fa-martini-glass-citrus"></i>
+                <h3>Micheladas Envenenadas</h3>
+                <p>No somos un bar cualquiera. Somos los creadores de experiencias como la Maramango Tequila o la Wiki Wiki. Bebidas que no olvidarás.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fa-solid fa-medal"></i>
+                <h3>Calidad Artesanal</h3>
+                <p>Carnes 100% artesanales, chicharrón al barril crujiente y salsas exclusivas de la casa preparadas diariamente para garantizar la máxima frescura.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="reviews">
+        <h2>Lo que dicen nuestros clientes</h2>
+        <div class="maps-rating">
+            <i class="fa-brands fa-google google-icon"></i>
+            4.8 
+            <span>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star-half-stroke"></i>
+                (Basado en reseñas reales)
+            </span>
+        </div>
+
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="reviewer-info">
+                    <div class="reviewer-avatar">A</div>
+                    <div>
+                        <div class="reviewer-name">Andrés M.</div>
+                        <div class="review-stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"Las mejores micheladas de la zona, súper recomendada la Cerezada con Vodka. El chicharrón al barril en los nachos es un 10/10. ¡Excelente ambiente!"</p>
+            </div>
+
+            <div class="review-card">
+                <div class="reviewer-info">
+                    <div class="reviewer-avatar">C</div>
+                    <div>
+                        <div class="reviewer-name">Carolina G.</div>
+                        <div class="review-stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"Pedí por WhatsApp la Picada Mixta y me llegó súper rápido, caliente y bien empacada. El sabor es brutal y las porciones son generosas. Volveré a pedir."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="reviewer-info">
+                    <div class="reviewer-avatar">D</div>
+                    <div>
+                        <div class="reviewer-name">Daniel R.</div>
+                        <div class="review-stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"El lugar perfecto para ir con amigos. Probamos la Burguer Chorimoy y es una locura de sabor. La atención es de primera y el lugar tiene muy buena energía."</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2026 Chamoy Micheladas & Shots. Todos los derechos reservados.</p>
+            <div class="social-links">
+                <a href="https://www.instagram.com/chamoy_micheladas_shots/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.instagram.com/chamoy_micheladas_shots/" target="_blank"><i class="fa-brands fa-threads"></i></a>
+                <a href="#" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
