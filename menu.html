@@ -7,6 +7,7 @@
     <title>Menú | Chamoy</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
 </head>
 <body>
 
@@ -18,19 +19,61 @@
                 <i class="fa-solid fa-bars"></i>
             </div>
             
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="menu.html" class="active">Menú</a></li>
-                    <li><a href="reservas.html">Reservaciones</a></li>
-                </ul>
-            </nav>
+            
             <div class="cart-icon-container" onclick="toggleCartMenu()">
                 <i class="fa-solid fa-basket-shopping"></i>
                 <span id="cart-count" class="cart-count">0</span>
             </div>
         </div>
     </header>
+
+    <!-- ============================================= -->
+    <!-- NUEVOS COMPONENTES: BOTÓN SUBIR Y WHATSAPP FLOTANTE -->
+    <!-- ============================================= -->
+
+    <!-- Botón Volver Arriba -->
+    <button id="btn-scroll-top" class="btn-scroll-top" onclick="scrollToTop()" title="Volver arriba">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- Contenedor del WhatsApp Flotante -->
+    <div class="whatsapp-floating-container">
+        <!-- Ventana de Preguntas Frecuentes -->
+        <div id="whatsapp-faq-window" class="whatsapp-faq-window">
+            <div class="faq-header">
+                <div class="faq-avatar">🌶️</div>
+                <div class="faq-header-info">
+                    <h4>Soporte Chamoy</h4>
+                    <p>Normalmente responde en minutos</p>
+                </div>
+                <button class="faq-close" onclick="toggleWhatsappFaq()">&times;</button>
+            </div>
+            <div class="faq-body">
+                <p class="faq-welcome">¡Hola! 🔥 ¿En qué te podemos ayudar hoy? Elige una opción para chatear:</p>
+                
+                <div class="faq-options">
+                    <a href="https://api.whatsapp.com/send?phone=573206650984&text=%C2%A1Hola%20Chamoy%21%20%F0%9F%A5%AA%20Quiero%20saber%20cu%C3%A1l%20es%20el%20horario%20de%20atenci%C3%B3n%20hoy." target="_blank" class="faq-item">
+                        <i class="fa-regular fa-clock"></i> ¿Cuál es el horario de atención?
+                    </a>
+                    <a href="https://api.whatsapp.com/send?phone=573206650984&text=%C2%A1Hola%20Chamoy%21%20%F0%9F%93%8D%20%C2%BFQuiero%20saber%20si%20tienen%20cobertura%20de%20domicilios%20en%20mi%20zona%3F" target="_blank" class="faq-item">
+                        <i class="fa-solid fa-motorcycle"></i> ¿Tienen cobertura de domicilios?
+                    </a>
+                    <a href="https://api.whatsapp.com/send?phone=573206650984&text=%C2%A1Hola%20Chamoy%21%20%F0%9F%A5%82%20Me%20gustar%C3%ADa%20cotizar%20un%20evento%20o%20reserva%20especial." target="_blank" class="faq-item">
+                        <i class="fa-solid fa-calendar-days"></i> Cotizar reservas o eventos especiales
+                    </a>
+                    <a href="https://api.whatsapp.com/send?phone=573206650984&text=%C2%A1Hola%20Chamoy%21%20%F0%9F%92%B3%20%C2%BFQu%C3%A9%20medios%20de%20pago%20reciben%20en%20el%20local%20y%20domicilios%3F" target="_blank" class="faq-item">
+                        <i class="fa-solid fa-credit-card"></i> Métodos de pago disponibles
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón Verde de WhatsApp principal -->
+        <button class="btn-whatsapp-toggle" onclick="toggleWhatsappFaq()">
+            <i class="fa-brands fa-whatsapp"></i>
+            <span class="notification-badge">1</span>
+        </button>
+    </div>
 
     <main class="menu-page">
         <h1 class="page-title">Nuestra Carta</h1>
@@ -382,5 +425,45 @@
     </footer>
 
     <script src="cart.js"></script>
+    <script>
+        // --- LOGICA DEL BOTÓN DE SUBIR (30% DE LA PÁGINA) ---
+        window.onscroll = function() { checkScrollPercent() };
+
+        function checkScrollPercent() {
+            const btnScroll = document.getElementById("btn-scroll-top");
+            
+            // Altura total del documento menos la altura visible de la ventana
+            const totalHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            // Cuánto ha bajado el usuario actualmente
+            const scrolled = window.scrollY;
+
+            // Calculamos el porcentaje matemático de bajada
+            const scrollPercent = (scrolled / totalHeight) * 100;
+
+            // Si pasa o es igual al 30%, se muestra el botón; si no, se oculta
+            if (scrollPercent >= 30) {
+                btnScroll.style.display = "flex";
+            } else {
+                btnScroll.style.display = "none";
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth" // Desplazamiento estético y suave
+            });
+        }
+
+        // --- LÓGICA DEL POPUP DE WHATSAPP ---
+        function toggleWhatsappFaq() {
+            const faqWindow = document.getElementById("whatsapp-faq-window");
+            if (faqWindow.style.display === "block") {
+                faqWindow.style.display = "none";
+            } else {
+                faqWindow.style.display = "block";
+            }
+        }
+    </script>
 </body>
 </html>
