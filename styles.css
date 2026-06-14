@@ -86,6 +86,12 @@ header {
     }
 }
 
+.el-contenedor-de-tu-soporte {
+    display: none; /* Debe estar oculto al cargar la página */
+    position: fixed;
+    /* tus otros estilos */
+}
+
 .nav-container {
     display: flex;
     justify-content: space-between;
