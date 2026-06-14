@@ -15,7 +15,7 @@
         }
         .checkout-container {
             max-width: 600px;
-            margin: 120px auto 40px auto;
+            margin: 60px auto 40px auto;
             padding: 30px;
             background: rgba(25, 18, 18, 0.95);
             border-radius: 15px;
@@ -29,6 +29,25 @@
             text-align: center;
             margin-bottom: 25px;
         }
+
+        /* Estilo para el botón Volver al Menú */
+        .btn-volver {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            transition: color 0.3s ease;
+        }
+        .btn-volver:hover {
+            color: #ffcc00; /* Cambia al amarillo premium al pasar el cursor */
+        }
+        .btn-volver i {
+            font-size: 0.8rem;
+        }
+
         .summary-box {
             background: #1a1111;
             padding: 20px;
@@ -97,12 +116,24 @@
         #campo-direccion {
             transition: all 0.3s ease;
         }
+
+
+
     </style>
 </head>
 <body>
 
-    <div class="checkout-container">
+    
+        
+     <div class="summary-box">
+
+            <div class="checkout-container">
+        <a href="menu.html" class="btn-volver">
+            <i class="fa-solid fa-arrow-left"></i> Volver al Menú
+        </a>
+
         <h1><i class="fa-solid fa-receipt"></i> Finalizar Pedido</h1>
+    
         
         <div class="summary-box">
             <h2>Tu Resumen</h2>
