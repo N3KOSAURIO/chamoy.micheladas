@@ -4,258 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="imagenes/logo chamoy-04.png">
-    <title>Pedido | Chamoy</title>
+    <title>Menú | Chamoy</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <style>
-        /* =========================================
-           ESTILOS ESPECÍFICOS DEL PEDIDO
-           ========================================= */
-        .pedido-container {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        .pedido-container h1 {
-            text-align: center;
-            color: var(--secondary);
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-        }
-
-        .pedido-container .subtitle {
-            text-align: center;
-            color: var(--text-muted);
-            margin-bottom: 30px;
-        }
-
-        .pedido-card {
-            background: var(--bg-card);
-            border-radius: 15px;
-            padding: 30px;
-            border: 1px solid var(--border-color);
-        }
-
-        .pedido-card h2 {
-            color: var(--text-main);
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .pedido-card h2 i {
-            color: var(--primary);
-        }
-
-        /* Lista de productos en el resumen */
-        .resumen-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .resumen-item:last-child {
-            border-bottom: none;
-        }
-
-        .resumen-item img {
-            width: 50px;
-            height: 50px;
-            border-radius: 8px;
-            object-fit: cover;
-            border: 1px solid var(--border-color);
-        }
-
-        .resumen-item .info {
-            flex: 1;
-        }
-
-        .resumen-item .info h4 {
-            color: var(--text-main);
-            font-size: 0.95rem;
-            margin-bottom: 2px;
-        }
-
-        .resumen-item .info small {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-        }
-
-        .resumen-item .cantidad {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin: 0 10px;
-        }
-
-        .resumen-item .subtotal {
-            color: var(--secondary);
-            font-weight: bold;
-            font-size: 1rem;
-            min-width: 60px;
-            text-align: right;
-        }
-
-        /* Total general */
-        .total-general {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            margin-top: 15px;
-            border-top: 2px solid var(--primary);
-            font-size: 1.2rem;
-        }
-
-        .total-general .label {
-            color: var(--text-main);
-            font-weight: bold;
-        }
-
-        .total-general .amount {
-            color: var(--secondary);
-            font-size: 1.6rem;
-            font-weight: bold;
-        }
-
-        /* Botón de envío */
-        .btn-enviar {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .btn-enviar:hover {
-            transform: scale(1.02);
-            box-shadow: 0 4px 25px var(--shadow-color);
-        }
-
-        .btn-enviar:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .btn-volver {
-            display: inline-block;
-            padding: 10px 25px;
-            background: transparent;
-            color: var(--text-muted);
-            border: 1px solid var(--border-color);
-            border-radius: 25px;
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            margin-bottom: 20px;
-        }
-
-        .btn-volver:hover {
-            color: var(--text-main);
-            border-color: var(--primary);
-        }
-
-        .btn-volver i {
-            margin-right: 8px;
-        }
-
-        /* Estado vacío */
-        .carrito-vacio {
-            text-align: center;
-            padding: 50px 20px;
-        }
-
-        .carrito-vacio i {
-            font-size: 4rem;
-            color: var(--text-muted);
-            opacity: 0.3;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .carrito-vacio h3 {
-            color: var(--text-main);
-            margin-bottom: 10px;
-        }
-
-        .carrito-vacio p {
-            color: var(--text-muted);
-            margin-bottom: 25px;
-        }
-
-        .carrito-vacio .btn-ir-menu {
-            display: inline-block;
-            padding: 12px 30px;
-            background: var(--primary);
-            color: white;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .carrito-vacio .btn-ir-menu:hover {
-            background: var(--primary-dark);
-            transform: scale(1.05);
-        }
-
-        /* Responsive */
-        @media (max-width: 600px) {
-            .pedido-card {
-                padding: 20px;
-            }
-
-            .resumen-item {
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-
-            .resumen-item img {
-                width: 40px;
-                height: 40px;
-            }
-
-            .resumen-item .info h4 {
-                font-size: 0.85rem;
-            }
-
-            .total-general {
-                flex-direction: column;
-                gap: 5px;
-                text-align: center;
-            }
-
-            .total-general .amount {
-                font-size: 1.3rem;
-            }
-
-            .btn-enviar {
-                font-size: 1rem;
-                padding: 14px;
-            }
-        }
-    </style>
 </head>
 <body>
 
     <!-- ============================================= -->
-    <!-- HEADER - NAVEGACIÓN                          -->
+    <!-- HEADER - NAVEGACIÓN                           -->
     <!-- ============================================= -->
     <header>
         <div class="nav-container">
@@ -263,17 +19,20 @@
                 <img src="imagenes/logo chamoy-04.png" alt="Chamoy Logo" class="nav-logo">
             </a>
 
+            <!-- Botón menú móvil (hamburguesa) -->
             <div class="menu-toggle" onclick="toggleMobileMenu()">
                 <i class="fa-solid fa-bars"></i>
             </div>
 
+            <!-- Enlaces de navegación -->
             <ul class="nav-links">
                 <li><a href="index.html">Inicio</a></li>
-                <li><a href="menu.html">Menú</a></li>
+                <li><a href="menu.html" class="active">Menú</a></li>
                 <li><a href="reservas.html">Reservas</a></li>
             </ul>
 
-            <div class="cart-icon-container" onclick="window.location.href='menu.html'">
+            <!-- Icono del carrito -->
+            <div class="cart-icon-container" onclick="toggleCartMenu()">
                 <i class="fa-solid fa-basket-shopping"></i>
                 <span id="cart-count" class="cart-count">0</span>
             </div>
@@ -281,20 +40,388 @@
     </header>
 
     <!-- ============================================= -->
-    <!-- CONTENIDO PRINCIPAL                          -->
+    <!-- BOTÓN SUBIR (SCROLL TO TOP)                   -->
     <!-- ============================================= -->
-    <main class="pedido-container">
-        <a href="menu.html" class="btn-volver">
-            <i class="fa-solid fa-arrow-left"></i> Seguir comprando
-        </a>
+    <button id="btn-scroll-top" class="btn-scroll-top" onclick="scrollToTop()" title="Volver arriba">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
 
-        <h1>📋 Resumen de tu Pedido</h1>
-        <p class="subtitle">Revisa los productos y confirma tu pedido</p>
+    <!-- ============================================= -->
+    <!-- CONTENIDO PRINCIPAL - MENÚ                   -->
+    <!-- ============================================= -->
+    <main class="menu-page">
+        <h1 class="page-title"><i class="fa-solid fa-utensils"></i> Nuestra Carta</h1>
 
-        <div class="pedido-card" id="resumen-pedido">
-            <!-- Aquí se renderiza el contenido con JavaScript -->
-        </div>
+        <!-- ========================================= -->
+        <!-- SECCIÓN 1: COMIDAS (Para Antojarse)       -->
+        <!-- ========================================= -->
+        <section class="menu-category">
+            <h2><i class="fa-solid fa-utensils"></i> Para Antojarse</h2>
+            <div class="products-grid">
+
+                <!-- Producto 1: Burguer Chorimoy -->
+                <div class="product-card">
+                    <img src="imagenes/chorimoy.png" alt="Burguer Chorimoy">
+                    <div class="product-info">
+                        <h3>Burguer Chorimoy</h3>
+                        <p>Chorizo, carne 150g artesanal, queso mozarella, queso crema, lechuga, tomate, cebolla caramelizada y papas.</p>
+                        <div class="product-meta">
+                            <span class="price">$14.900</span>
+                            <button class="btn-add" onclick="addToCart('Burguer Chorimoy', 14900, 'imagenes/chorimoy.png', event)">+ Agregar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 2: Burguer Chamoy -->
+                <div class="product-card">
+                    <img src="imagenes/burguer chamoy.png" alt="Burguer Chamoy">
+                    <div class="product-info">
+                        <h3>Burguer Chamoy</h3>
+                        <p>Chicharrón en salsa de tamarindo, carne 150g, queso costeño, lechuga, tomate, mozarella, aros de cebolla y papas.</p>
+                        <div class="product-meta">
+                            <span class="price">$24.900</span>
+                            <button class="btn-add" onclick="addToCart('Burguer Chamoy', 24900, 'imagenes/burguer chamoy.png', event)">+ Agregar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 3: Ceviche de Chicharrón -->
+                <div class="product-card">
+                    <img src="imagenes/cevivhe.png" alt="Ceviche de Chicharrón">
+                    <div class="product-info">
+                        <h3>Ceviche de Chicharrón</h3>
+                        <p>Chicharrón al barril, ensalada cevichera, guacamole, mango, platanito crocante, chamoy, limón y tajín.</p>
+                        <div class="product-meta">
+                            <span class="price">$15.000</span>
+                            <button class="btn-add" onclick="addToCart('Ceviche de Chicharrón', 15000, 'imagenes/cevivhe.png', event)">+ Agregar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 4: Picada Mixta -->
+                <div class="product-card">
+                    <img src="imagenes/picada mixta.png" alt="Picada Mixta">
+                    <div class="product-info">
+                        <h3>Picada Mixta</h3>
+                        <p>Chicharrón al barril, chorizo, butifarra, papas a la francesa, arepa y salsas de la casa.</p>
+                        <div class="product-meta">
+                            <span class="price">$25.000</span>
+                            <button class="btn-add" onclick="addToCart('Picada Mixta', 25000, 'imagenes/picada mixta.png', event)">+ Agregar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 5: Dorilocos -->
+                <div class="product-card">
+                    <img src="imagenes/doriloco.png" alt="Dorilocos">
+                    <div class="product-info">
+                        <h3>Dorilocos</h3>
+                        <p>Carne molida o pollo, pico de gallo, guacamole, queso costeño, doritos y salsa al gusto.</p>
+                        <div class="product-meta">
+                            <span class="price">$17.000</span>
+                            <button class="btn-add" onclick="addToCart('Dorilocos', 17000, 'imagenes/doriloco.png', event)">+ Agregar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 6: Salchi Papa -->
+                <div class="product-card">
+                    <img src="imagenes/salcipapa.png" alt="Salchi Papa">
+                    <div class="product-info">
+                        <h3>Salchi Papa</h3>
+                        <p>Papas a la francesa, trozos de plátano maduro, salchicha zenú, tocineta, mozarella y salsas de la casa.</p>
+                        <div class="product-meta">
+                            <span class="price">$14.000</span>
+                            <button class="btn-add" onclick="addToCart('Salchi Papa', 14000, 'imagenes/salcipapa.png', event)">+ Agregar</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========================================= -->
+        <!-- SECCIÓN 2: MICHELADAS FRUTALES            -->
+        <!-- ========================================= -->
+        <section class="menu-category">
+            <h2><i class="fa-solid fa-cherries"></i> Micheladas Frutales</h2>
+            <p class="category-note">🌟 Elige tu base favorita: Soda ($10k) o Cerveza ($12k)</p>
+            <div class="products-grid">
+
+                <!-- Producto 7: Michelada de Mango -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80" alt="Michelada Mango">
+                    <div class="product-info">
+                        <h3>Michelada de Mango</h3>
+                        <p>Borde de chamoy, escarchado de sal/azúcar, mango picado, saborizante, limón.</p>
+                        <div class="product-meta-options">
+                            <button class="btn-add-opt" onclick="addToCart('Michelada Mango (Soda)', 10000, 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80', event)">🍹 Soda 10k</button>
+                            <button class="btn-add-opt" onclick="addToCart('Michelada Mango (Cerveza)', 12000, 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80', event)">🍺 Cerveza 12k</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 8: Michelada de Cereza -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=500&q=80" alt="Michelada Cereza">
+                    <div class="product-info">
+                        <h3>Michelada de Cereza</h3>
+                        <p>Borde de chamoy, escarchado de minisigui, cerezas, saborizante de cereza, limón.</p>
+                        <div class="product-meta-options">
+                            <button class="btn-add-opt" onclick="addToCart('Michelada Cereza (Soda)', 10000, 'https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=500&q=80', event)">🍹 Soda 10k</button>
+                            <button class="btn-add-opt" onclick="addToCart('Michelada Cereza (Cerveza)', 12000, 'https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=500&q=80', event)">🍺 Cerveza 12k</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 9: Michelada de Maracuyá -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=500&q=80" alt="Michelada Maracuyá">
+                    <div class="product-info">
+                        <h3>Michelada de Maracuyá</h3>
+                        <p>Borde de chamoy, escarchado de sal, pulpa de maracuyá, saborizante, limón.</p>
+                        <div class="product-meta-options">
+                            <button class="btn-add-opt" onclick="addToCart('Michelada Maracuyá (Soda)', 10000, 'https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=500&q=80', event)">🍹 Soda 10k</button>
+                            <button class="btn-add-opt" onclick="addToCart('Michelada Maracuyá (Cerveza)', 12000, 'https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=500&q=80', event)">🍺 Cerveza 12k</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 10: Michelada Manzana Verde -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1560512823-829485b8bf24?auto=format&fit=crop&w=500&q=80" alt="Michelada Manzana Verde">
+                    <div class="product-info">
+                        <h3>Michelada Manzana Verde</h3>
+                        <p>Borde de chamoy, escarchado de minisigui, manzanas, saborizante de manzana, limón.</p>
+                        <div class="product-meta-options">
+                            <button class="btn-add-opt" onclick="addToCart('Michelada Manzana Verde (Soda)', 10000, 'https://images.unsplash.com/photo-1560512823-829485b8bf24?auto=format&fit=crop&w=500&q=80', event)">🍹 Soda 10k</button>
+                            <button class="btn-add-opt" onclick="addToCart('Michelada Manzana Verde (Cerveza)', 12000, 'https://images.unsplash.com/photo-1560512823-829485b8bf24?auto=format&fit=crop&w=500&q=80', event)">🍺 Cerveza 12k</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 11: Michelada de Tamarindo -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=500&q=80" alt="Michelada Tamarindo">
+                    <div class="product-info">
+                        <h3>Michelada de Tamarindo</h3>
+                        <p>Borde de chamoy, escarchado de minisigui, trozos de tamarindo, saborizante, limón.</p>
+                        <div class="product-meta-options">
+                            <button class="btn-add-opt" onclick="addToCart('Michelada Tamarindo (Soda)', 10000, 'https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=500&q=80', event)">🍹 Soda 10k</button>
+                            <button class="btn-add-opt" onclick="addToCart('Michelada Tamarindo (Cerveza)', 12000, 'https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=500&q=80', event)">🍺 Cerveza 12k</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 12: Michelada de Gomitas -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=500&q=80" alt="Michelada Gomitas">
+                    <div class="product-info">
+                        <h3>Michelada de Gomitas</h3>
+                        <p>Borde de chamoy, escarchado de minisigui, gomitas, saborizante curazao, limón.</p>
+                        <div class="product-meta-options">
+                            <button class="btn-add-opt" onclick="addToCart('Michelada Gomitas (Soda)', 10000, 'https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=500&q=80', event)">🍹 Soda 10k</button>
+                            <button class="btn-add-opt" onclick="addToCart('Michelada Gomitas (Cerveza)', 12000, 'https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=500&q=80', event)">🍺 Cerveza 12k</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========================================= -->
+        <!-- SECCIÓN 3: MICHELADAS ENVENENADAS         -->
+        <!-- ========================================= -->
+        <section class="menu-category">
+            <h2><i class="fa-solid fa-skull"></i> Micheladas Envenenadas</h2>
+            <div class="products-grid">
+
+                <!-- Producto 13: Maramango Tequila -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=500&q=80" alt="Maramango Tequila">
+                    <div class="product-info">
+                        <h3>Maramango Tequila</h3>
+                        <p>Borde de chamoy, escarchado de tajín, saborizante mango-maracuyá, limón, tequila, gomitas, cerveza.</p>
+                        <div class="product-meta">
+                            <span class="price">$17.000</span>
+                            <button class="btn-add" onclick="addToCart('Maramango Tequila', 17000, 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=500&q=80', event)">+ Agregar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 14: Cerezada de Vodka -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=500&q=80" alt="Cerezada de Vodka">
+                    <div class="product-info">
+                        <h3>Cerezada de Vodka</h3>
+                        <p>Borde de chamoy, escarchado de minisigui, saborizante de cereza, cerezas, limón, vodka, gomitas, cerveza.</p>
+                        <div class="product-meta">
+                            <span class="price">$16.000</span>
+                            <button class="btn-add" onclick="addToCart('Cerezada de Vodka', 16000, 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=500&q=80', event)">+ Agregar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 15: Michelada Mexicana -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1575444758702-4a6b9222336e?auto=format&fit=crop&w=500&q=80" alt="Mexicana">
+                    <div class="product-info">
+                        <h3>Michelada Mexicana</h3>
+                        <p>Borde de chamoy, escarchado de tajín, granadina, limón, tabasco, tequila, cerveza.</p>
+                        <div class="product-meta">
+                            <span class="price">$16.000</span>
+                            <button class="btn-add" onclick="addToCart('Mexicana', 16000, 'https://images.unsplash.com/photo-1575444758702-4a6b9222336e?auto=format&fit=crop&w=500&q=80', event)">+ Agregar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 16: Americana -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=500&q=80" alt="Americana">
+                    <div class="product-info">
+                        <h3>Americana</h3>
+                        <p>Borde de chamoy azul, escarchado de sal, curazao azul, limón, vodka, gomitas, cerveza.</p>
+                        <div class="product-meta">
+                            <span class="price">$15.000</span>
+                            <button class="btn-add" onclick="addToCart('Americana', 15000, 'https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=500&q=80', event)">+ Agregar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 17: Submarina -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=500&q=80" alt="Submarina">
+                    <div class="product-info">
+                        <h3>Submarina</h3>
+                        <p>Borde de chamoy, escarchado de sal, limón, whisky, saborizante de mango, mango picado, cerveza.</p>
+                        <div class="product-meta">
+                            <span class="price">$15.000</span>
+                            <button class="btn-add" onclick="addToCart('Submarina', 15000, 'https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=500&q=80', event)">+ Agregar</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========================================= -->
+        <!-- SECCIÓN 4: MICHELADAS ESPECIALES          -->
+        <!-- ========================================= -->
+        <section class="menu-category">
+            <h2><i class="fa-solid fa-star"></i> Micheladas Especiales</h2>
+            <div class="products-grid">
+
+                <!-- Producto 18: SandiFresh -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=500&q=80" alt="SandiFresh">
+                    <div class="product-info">
+                        <h3>SandiFresh</h3>
+                        <p>Borde de chamoy, borde de minisigui, limón, saborizante de cereza, fresa, sandía, soda, saborizante de manzana, chantilly.</p>
+                        <div class="product-meta">
+                            <span class="price">$16.000</span>
+                            <button class="btn-add" onclick="addToCart('SandiFresh', 16000, 'https://images.unsplash.com/photo-1563259721-2dde7e22b79a?auto=format&fit=crop&w=500&q=80', event)">+ Agregar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 19: LuloBoom -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=500&q=80" alt="LuloBoom">
+                    <div class="product-info">
+                        <h3>LuloBoom</h3>
+                        <p>Borde de chamoy, escarchado con minisigui, limón, granadina, trozos de lulo, gomitas, un bonbonbum, Sprite o cerveza.</p>
+                        <div class="product-meta">
+                            <span class="price">$17.000</span>
+                            <button class="btn-add" onclick="addToCart('LuloBoom', 17000, 'https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=500&q=80', event)">+ Agregar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 20: Wiki Wiki -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80" alt="Wiki Wiki">
+                    <div class="product-info">
+                        <h3>Wiki Wiki</h3>
+                        <p>Borde de chamoy, escarchado de minisigui, manzana verde, limón, kiwi, soda, cuatro o sprite.</p>
+                        <div class="product-meta">
+                            <span class="price">$17.000</span>
+                            <button class="btn-add" onclick="addToCart('Wiki Wiki', 17000, 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80', event)">+ Agregar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 21: Frutos Verdes -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=500&q=80" alt="Frutos Verdes">
+                    <div class="product-info">
+                        <h3>Frutos Verdes</h3>
+                        <p>Borde de chamoy, escarchado de minisigui, mezcla de manzana verde, mango biche, kiwi, limón, hielo, saborizante de mango, soda, cuatro o sprite.</p>
+                        <div class="product-meta">
+                            <span class="price">$16.000</span>
+                            <button class="btn-add" onclick="addToCart('Frutos Verdes', 16000, 'https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=500&q=80', event)">+ Agregar</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========================================= -->
+        <!-- SECCIÓN 5: JUGOS Y CERVEZAS              -->
+        <!-- ========================================= -->
+        <section class="menu-category">
+            <h2><i class="fa-solid fa-cup-straw"></i> Jugos Naturales &amp; Cervezas</h2>
+            <div class="products-grid">
+
+                <!-- Producto 22: Jugos Naturales -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?auto=format&fit=crop&w=500&q=80" alt="Jugos">
+                    <div class="product-info">
+                        <h3>Jugos Naturales</h3>
+                        <p>Mango, Maracuyá o Mora.</p>
+                        <div class="product-meta-options">
+                            <button class="btn-add-opt" onclick="addToCart('Jugo en Agua', 6000, 'https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?auto=format&fit=crop&w=500&q=80', event)">💧 Agua 6k</button>
+                            <button class="btn-add-opt" onclick="addToCart('Jugo en Leche', 8000, 'https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?auto=format&fit=crop&w=500&q=80', event)">🥛 Leche 8k</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 23: Cervezas -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1532634922-8fe0b757fb13?auto=format&fit=crop&w=500&q=80" alt="Cervezas">
+                    <div class="product-info">
+                        <h3>Cervezas</h3>
+                        <p>Pilsen, Águila o Light. ¡Bien heladas!</p>
+                        <div class="product-meta">
+                            <span class="price">$6.000</span>
+                            <button class="btn-add" onclick="addToCart('Cerveza', 6000, 'https://images.unsplash.com/photo-1532634922-8fe0b757fb13?auto=format&fit=crop&w=500&q=80', event)">+ Agregar</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
     </main>
+
+    <!-- ============================================= -->
+    <!-- CARRITO LATERAL                              -->
+    <!-- ============================================= -->
+    <div id="side-cart" class="side-cart">
+        <div class="cart-header">
+            <h2><i class="fa-solid fa-basket-shopping"></i> Tu Pedido</h2>
+            <button class="close-cart" onclick="toggleCartMenu()">&times;</button>
+        </div>
+        <div id="cart-items" class="cart-items"></div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                Total: $<span id="cart-total-val">0</span>
+            </div>
+            <button class="btn btn-primary btn-block" onclick="sendOrderWhatsApp()">
+                Continuar al pedido <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
 
     <!-- ============================================= -->
     <!-- FOOTER                                       -->
@@ -318,182 +445,28 @@
 
     <script>
         // =============================================
-        // MENÚ MÓVIL
+        // BOTÓN SUBIR (SCROLL TO TOP)
         // =============================================
-        function toggleMobileMenu() {
-            const navLinks = document.querySelector('.nav-links');
-            if (navLinks) navLinks.classList.toggle('active');
+        window.onscroll = function() {
+            checkScrollPercent();
+        };
+
+        function checkScrollPercent() {
+            const btnScroll = document.getElementById('btn-scroll-top');
+            if (!btnScroll) return;
+
+            const totalHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = window.scrollY;
+            const scrollPercent = (scrolled / totalHeight) * 100;
+
+            btnScroll.style.display = scrollPercent >= 30 ? 'flex' : 'none';
         }
 
-        // =============================================
-        // RENDERIZAR RESUMEN DEL PEDIDO
-        // =============================================
-        document.addEventListener('DOMContentLoaded', function() {
-            const cart = JSON.parse(localStorage.getItem('CHAMOY_CART')) || [];
-            const container = document.getElementById('resumen-pedido');
-
-            // Actualizar contador del carrito
-            const countElement = document.getElementById('cart-count');
-            if (countElement) {
-                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-                countElement.innerText = totalItems;
-                countElement.style.display = totalItems === 0 ? 'none' : 'inline-block';
-            }
-
-            // Si el carrito está vacío
-            if (cart.length === 0) {
-                container.innerHTML = `
-                    <div class="carrito-vacio">
-                        <i class="fa-solid fa-basket-shopping"></i>
-                        <h3>Tu carrito está vacío</h3>
-                        <p>No tienes productos agregados. ¡Explora nuestro menú!</p>
-                        <a href="menu.html" class="btn-ir-menu">
-                            <i class="fa-solid fa-utensils"></i> Ver Menú
-                        </a>
-                    </div>
-                `;
-                return;
-            }
-
-            // Construir el HTML del resumen
-            let html = `<h2><i class="fa-solid fa-receipt"></i> Productos (${cart.reduce((s, i) => s + i.quantity, 0)})</h2>`;
-            let totalGeneral = 0;
-
-            cart.forEach((item, index) => {
-                const subtotal = item.price * item.quantity;
-                totalGeneral += subtotal;
-                const imgSrc = item.imgSrc || 'imagenes/placeholder.png';
-
-                html += `
-                    <div class="resumen-item">
-                        <img src="${imgSrc}" alt="${item.name}" loading="lazy">
-                        <div class="info">
-                            <h4>${item.name}</h4>
-                            <small>$${item.price.toLocaleString()} c/u</small>
-                        </div>
-                        <span class="cantidad">×${item.quantity}</span>
-                        <span class="subtotal">$${subtotal.toLocaleString()}</span>
-                    </div>
-                `;
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
             });
-
-            html += `
-                <div class="total-general">
-                    <span class="label">Total a pagar</span>
-                    <span class="amount">$${totalGeneral.toLocaleString()}</span>
-                </div>
-                <!-- ============================================= -->
-                <!-- CAMPOS DEL CLIENTE                           -->
-                <!-- ============================================= -->
-
-                <!-- Campo: Notas adicionales -->
-                <div class="input-group">
-                    <label for="order-notes">
-                        <i class="fa-regular fa-pen-to-square"></i> Notas adicionales
-                    </label>
-                    <textarea id="order-notes" 
-                            name="notas" 
-                            rows="2" 
-                            placeholder="Ej: Sin tomate, con queso extra..."
-                            class="textarea-notes"></textarea>
-                </div>
-
-                <!-- Campo: Dirección de entrega con botón de ubicación -->
-                <div class="input-group">
-                    <label for="delivery-address">
-                        <i class="fa-solid fa-location-dot"></i> Dirección de entrega
-                    </label>
-                    <div class="address-input-wrapper">
-                        <input type="text" 
-                            id="delivery-address" 
-                            placeholder="Calle, número, barrio, referencias..." 
-                            class="input-address">
-                        <button type="button" id="btn-get-location" class="btn-location" title="Usar mi ubicación actual">
-                            <i class="fa-solid fa-location-crosshairs"></i>
-                        </button>
-                    </div>
-                    <small class="notes-hint">escribe tu direccón o dale al botón. <span class="location-hint">📌 Presiona el botón para usar tu ubicación actual.</span></small>
-                </div>
-
-                <!-- Campo: Teléfono de contacto -->
-                <div class="input-group">
-                    <label for="contact-phone">
-                        <i class="fa-solid fa-phone"></i> Teléfono de contacto
-                    </label>
-                    <input type="tel" 
-                        id="contact-phone" 
-                        placeholder="300 123 4567" 
-                        class="input-phone">
-                    <small class="notes-hint">Número donde te podemos contactar si hay novedades.</small>
-                </div>
-
-                <!-- NUEVO: Campo: Nombre de quien recibe -->
-                <div class="input-group">
-                    <label for="receiver-name">
-                        <i class="fa-regular fa-user"></i> ¿A nombre de quién reciben el pedido?
-                    </label>
-                    <input type="text" 
-                        id="receiver-name" 
-                        placeholder="Ej: María Pérez" 
-                        class="input-name">
-                    <small class="notes-hint">Indica el nombre de la persona que recibirá el pedido.</small>
-                </div>
-
-                <button class="btn-enviar" onclick="sendOrderWithNotes()">
-                    <i class="fa-brands fa-whatsapp"></i> Enviar pedido a WhatsApp
-                </button>
-            `;
-
-            container.innerHTML = html;
-        });
-
-        
-
-        // =============================================
-        // ENVIAR PEDIDO COMPLETO POR WHATSAPP
-        // =============================================
-
-        function sendOrderWithNotes() {
-            // Obtener carrito
-            const cart = JSON.parse(localStorage.getItem('CHAMOY_CART')) || [];
-            if (cart.length === 0) {
-                alert('❌ Tu carrito está vacío. Agrega productos primero.');
-                return;
-            }
-
-            // Obtener datos del formulario
-            const notes = document.getElementById('order-notes')?.value.trim() || 'Sin notas adicionales.';
-            const address = document.getElementById('delivery-address')?.value.trim() || 'No especificada.';
-            const phone = document.getElementById('contact-phone')?.value.trim() || 'No especificado.';
-
-            // Validar campos obligatorios (opcional)
-            if (!address || address === 'No especificada.') {
-                const confirmar = confirm('⚠️ No has ingresado una dirección de entrega. ¿Quieres continuar de todos modos?');
-                if (!confirmar) return;
-            }
-
-            // Construir mensaje
-            let mensaje = '🍽️ *NUEVO PEDIDO - CHAMOY* 🍽️\n\n';
-            let total = 0;
-
-            cart.forEach(item => {
-                const subtotal = item.price * item.quantity;
-                total += subtotal;
-                mensaje += `• ${item.name} ×${item.quantity} = $${subtotal.toLocaleString()}\n`;
-            });
-
-            mensaje += `\n💰 *Total: $${total.toLocaleString()}*`;
-            mensaje += `\n\n📍 *Dirección:* ${address}`;
-            mensaje += `\n📱 *Contacto:* ${phone}`;
-            mensaje += `\n📝 *Notas:* ${notes}`;
-            mensaje += `\n\n🙏 ¡Gracias por tu pedido! 🔥`;
-
-            // Número de WhatsApp
-            const phoneNumber = '573206650984';
-            const url = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(mensaje)}`;
-
-            // Abrir WhatsApp
-            window.open(url, '_blank');
         }
     </script>
 
