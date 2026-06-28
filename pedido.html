@@ -423,8 +423,12 @@
                     <input type="tel" 
                         id="contact-phone" 
                         placeholder="300 123 4567" 
-                        class="input-phone">
+                        class="input-phone"
+                        maxlength="12">
                     <small class="notes-hint">Número donde te podemos contactar si hay novedades.</small>
+                    <small class="error-message" id="phone-error" style="color: #e74c3c; display: none; margin-top: 4px;">
+                        <i class="fa-solid fa-circle-exclamation"></i> Ingresa un número válido de 10 dígitos (ej: 3001234567)
+                    </small>
                 </div>
 
                 <!-- NUEVO: Campo: Nombre de quien recibe -->
@@ -447,6 +451,148 @@
             container.innerHTML = html;
         });
 
+        document.addEventListener('DOMContentLoaded', function() {
+            const phoneInput = document.getElementById('contact-phone');
+            const errorMsg = document.getElementById('phone-error');
+
+            // Función para limpiar el input (solo dígitos y espacios)
+            function cleanPhoneNumber(value) {
+                return value.replace(/[^\d\s]/g, '');
+            }
+
+            // Función para formatear el número mientras escribe (ej: 300 123 4567)
+            function formatPhoneNumber(value) {
+                const digits = value.replace(/\s/g, '');
+                if (digits.length <= 3) return digits;
+                if (digits.length <= 6) return digits.slice(0, 3) + ' ' + digits.slice(3);
+                return digits.slice(0, 3) + ' ' + digits.slice(3, 6) + ' ' + digits.slice(6, 10);
+            }
+
+            // Validar número (solo dígitos, 10 dígitos, que empiece con 3)
+            function isValidPhone(value) {
+                const digits = value.replace(/\s/g, '');
+                if (digits.length !== 10) return false;
+                if (!/^\d{10}$/.test(digits)) return false;
+                // Los números móviles en Colombia empiezan con 3
+                if (!digits.startsWith('3')) return false;
+                return true;
+            }
+
+            // Mostrar/ocultar error
+            function setError(show) {
+                if (show) {
+                    errorMsg.style.display = 'block';
+                    phoneInput.style.borderColor = '#e74c3c';
+                    phoneInput.style.outline = '2px solid rgba(231, 76, 60, 0.3)';
+                } else {
+                    errorMsg.style.display = 'none';
+                    phoneInput.style.borderColor = '';
+                    phoneInput.style.outline = '';
+                }
+            }
+
+            // Validar al perder el foco (blur)
+            phoneInput.addEventListener('blur', function(e) {
+                const value = this.value.trim();
+                if (value === '') {
+                    setError(false);
+                    return;
+                }
+                const isValid = isValidPhone(value);
+                setError(!isValid);
+                if (!isValid && value.length > 0) {
+                    // Si tiene menos de 10 dígitos, mostrar sugerencia
+                    const digits = value.replace(/\s/g, '');
+                    if (digits.length > 0 && digits.length < 10) {
+                        errorMsg.textContent = '⚠️ Faltan ' + (10 - digits.length) + ' dígitos. Debe tener 10 dígitos.';
+                        errorMsg.style.display = 'block';
+                    } else if (digits.length === 10 && !digits.startsWith('3')) {
+                        errorMsg.textContent = '⚠️ Los números móviles en Colombia empiezan con 3 (ej: 300, 301, 302...)';
+                        errorMsg.style.display = 'block';
+                    } else {
+                        errorMsg.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Ingresa un número válido de 10 dígitos (ej: 3001234567)';
+                        errorMsg.style.display = 'block';
+                    }
+                }
+            });
+
+            // Validar al escribir (formateo y validación en tiempo real)
+            phoneInput.addEventListener('input', function(e) {
+                // Limpiar caracteres no válidos
+                let value = cleanPhoneNumber(this.value);
+                
+                // Limitar a 10 dígitos
+                const digits = value.replace(/\s/g, '');
+                if (digits.length > 10) {
+                    value = formatPhoneNumber(digits.slice(0, 10));
+                } else {
+                    value = formatPhoneNumber(digits);
+                }
+                
+                this.value = value;
+
+                // Validación en tiempo real si tiene más de 3 dígitos
+                const currentDigits = value.replace(/\s/g, '');
+                if (currentDigits.length >= 3) {
+                    const isValid = isValidPhone(value);
+                    setError(!isValid && currentDigits.length === 10);
+                    if (currentDigits.length === 10 && !isValid) {
+                        // Mensaje específico para error de prefijo
+                        if (!currentDigits.startsWith('3')) {
+                            errorMsg.textContent = '⚠️ Los números móviles en Colombia empiezan con 3';
+                            errorMsg.style.display = 'block';
+                        }
+                    }
+                } else {
+                    setError(false);
+                }
+            });
+
+            // Prevenir caracteres no numéricos en el input (excepto espacio)
+            phoneInput.addEventListener('keydown', function(e) {
+                // Permitir: teclas de control, espacio, números
+                const key = e.key;
+                if (key === 'Backspace' || key === 'Delete' || key === 'Tab' || key === 'Escape') return;
+                if (key === ' ') return;
+                if (!/^\d$/.test(key)) {
+                    e.preventDefault();
+                }
+            });
+
+            // Validación al pegar contenido
+            phoneInput.addEventListener('paste', function(e) {
+                e.preventDefault();
+                const clipboardData = e.clipboardData || window.clipboardData;
+                const pastedData = clipboardData.getData('text');
+                const digits = pastedData.replace(/\D/g, '');
+                if (digits.length > 0) {
+                    const formatted = formatPhoneNumber(digits.slice(0, 10));
+                    this.value = formatted;
+                    // Disparar evento input para validar
+                    this.dispatchEvent(new Event('input'));
+                }
+            });
+
+            // Función pública para validar desde el formulario
+            window.validatePhone = function() {
+                const value = phoneInput.value.trim();
+                if (value === '') {
+                    setError(false);
+                    return true; // Campo vacío se considera válido (no requerido)
+                }
+                const isValid = isValidPhone(value);
+                setError(!isValid);
+                return isValid;
+            };
+
+            // Ejemplo de uso al enviar formulario
+            // En tu evento submit:
+            // if (!window.validatePhone()) {
+            //     e.preventDefault();
+            //     phoneInput.focus();
+            //     return;
+            // }
+        });
         
 
         // =============================================
